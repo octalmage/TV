@@ -9,7 +9,7 @@ npm install socket.io
 
 Then start tv.js
 
-Once that is up and running replace [serverip] in the html files with the server's IP. Then edit the <source> tag to point to your video. Personally I use Amazon S3!
+Once that is up and running replace [serverip] in the html files with the server's IP. Then edit the [videolink] with the link to your movie. Personally I use Amazon S3!
 
 Use broadcast.html to stream and tv.html to watch. 
 
