@@ -1,120 +1,115 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-<style type="text/css">
+	<title>TV</title>
+	<style type="text/css">
 
-body
-{
-	margin:0px; 
-	padding: 0px;
-	background-color: black;
-}
+	body
+	{
+		margin:0px;
+		padding: 0px;
+		background-color: black;
+	}
 
-</style>
-
-
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="http://[serverip]/socket.io/socket.io.js"></script>
-<script> 
+	</style>
 
 
-$(document).on("ready", function()
-{
-  $("#sync").on("click", function()
-  {
-  		console.log("syncing");
-	  video.currentTime=timecode;
-	  
-	  
-  });
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script src="http://127.0.0.1:8077/socket.io/socket.io.js"></script>
+	<script>
 
 
-});
+	$(document).on("ready", function()
+	{
+		$("#sync").on("click", function()
+		{
+			console.log("syncing");
+			video.currentTime=timecode;
 
-</script>
+
+		});
+
+
+	});
+
+	</script>
 </head>
 
 
 <body>
-<video width="100%" height="100%" controls>
- 
-  <source src="[videolink]" type="video/mp4">
-  
-Your browser does not support the video tag.
-</video>
+	<video width="100%" height="100%" controls>
+
+		<source src="http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_1080p_h264.mov" type="video/mp4">
+
+			Your browser does not support the video tag.
+		</video>
 
 
-<script>
-  var timecode=0;
-  var state=0;
-  var ran=0;
-  var socket = io.connect('http://[serverip]');
-  var video = document.getElementsByTagName('video')[0];
-  
-  
+		<script>
+		var timecode=0;
+		var state=0;
+		var ran=0;
+		var socket = io.connect('http://localhost:8077');
+		var video = document.getElementsByTagName('video')[0];
 
-  
-  socket.on('news', function (data) {
-  console.log(data)
-  })
-  
-  video.oncanplay = function(e)
-  {
-  		if (ran==2)
-  		{
-	  		return
-  		}
-  		console.log("canplay: " + "state:" + state)
-  		if (ran==0)
-  		{
-  			ran=1;
-	  		video.currentTime=timecode;
-	  		return
-  		}
-  		
-	  	 if (state==1)
-	  	 {
-	  	 	ran=2
-		 	video.play();
-		 	video.currentTime=timecode;
-		 	setTimeout(function()
-		 	{
-		 		video.currentTime=timecode;
-		 	}, 5000)
-		 }
-  }
-  socket.on('update', function (data) {
-  if (data.action=="timecode")
-  {
-	  timecode=data.time;
-	  state=data.state
-  }
-  else if (data.action=="play")
-  {
-	  video.play();
-	  video.currentTime=timecode;
-  }
-  else if (data.action=="pause")
-  {
-	  video.pause();
-	  //video.currentTime=timecode;
-  }
-  else if (data.action=="sync")
-  {
-	  //video.currentTime=data.timecode;
-	  //if (data.state==1)
-	  //{
-	//	  video.play();
-	 // }
-  }
-    
-  });
-</script>
+		video.oncanplay = function(e)
+		{
+			if (ran === 2)
+			{
+				return
+			}
+			console.log("canplay: " + "state:" + state)
+			if (ran === 0)
+			{
+				ran=1;
+				video.currentTime=timecode;
+				return
+			}
+
+			if (state === 1)
+			{
+				ran=2
+				video.play();
+				video.currentTime=timecode;
+				setTimeout(function()
+				{
+					video.currentTime=timecode;
+				}, 5000)
+			}
+		}
+		socket.on('update', function (data) {
+			if (data.action==='timecode')
+			{
+				timecode=data.time;
+				state=data.state
+			}
+			else if (data.action==='play')
+			{
+				video.play();
+				video.currentTime=timecode;
+			}
+			else if (data.action==='pause')
+			{
+				video.pause();
+				//video.currentTime=timecode;
+			}
+			else if (data.action==='sync')
+			{
+				//video.currentTime=data.timecode;
+				//if (data.state==1)
+				//{
+				//	  video.play();
+				// }
+			}
+
+		});
+		</script>
 
 
 
-</body>
-<button id="sync">Sync</button>
+	</body>
+	<button id="sync">Sync</button>
 
-</html>
+	</html>

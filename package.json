@@ -1,0 +1,23 @@
+{
+  "name": "tv",
+  "version": "0.0.1",
+  "description": "TV",
+  "main": "tv.js",
+  "dependencies": {
+    "socket.io": "^0.9.14"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/octalmage/TV.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/octalmage/TV/issues"
+  },
+  "homepage": "https://github.com/octalmage/TV#readme"
+}
